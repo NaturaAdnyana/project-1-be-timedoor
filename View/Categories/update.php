@@ -53,28 +53,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
         }
 
-        form {
+        /* form {
             max-width: 600px;
             margin: auto;
         }
 
         label {
             margin-top: 10px;
-        }
+        } */
     </style>
 </head>
 
 <body>
-    <?php if (count($row) > 0) : ?>
-        <form action="" method="post">
-            <input type="hidden" name="id" value="<?php echo $row[0]['id']; ?>">
-            <label for="category_name">Category Name:</label>
-            <input type="text" name="category_name" value="<?php echo $row[0]['category_name']; ?>" required><br>
-            <input type="submit" value="Update Category">
-        </form>
-    <?php else : ?>
-        <p>Data not found</p>
-    <?php endif ?>
+    <main class="container mt-5" style="max-width: 800px; margin: auto;">
+        <h2 class="mb-5">Edit Category</h2>
+        <a href="index.php" class="btn btn-outline-secondary mb-3">
+            < Back to Category List</a>
+                <?php if (count($row) > 0) : ?>
+                    <div class="card">
+                        <form action="" method="post" class="card-body">
+                            <input type="hidden" name="id" value="<?php echo $row[0]['id']; ?>">
+                            <label for="category_name" class="form-label">Category Name</label>
+                            <input type="text" name="category_name" value="<?php echo $row[0]['category_name']; ?>" class="form-control">
+                            <?php if (isset($errors['category_name'])) : ?>
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    <?php echo $errors['category_name']; ?>
+                                </div>
+                            <?php endif ?>
+                            <br>
+                            <input type="submit" value="Update Category" class="btn btn-primary w-100">
+                        </form>
+                    </div>
+                <?php else : ?>
+                    <p>Data not found</p>
+                <?php endif ?>
+    </main>
 </body>
 
 </html>

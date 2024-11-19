@@ -79,49 +79,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
         }
 
-        form {
+        /* form {
             max-width: 600px;
             margin: auto;
         }
 
         label {
             margin-top: 10px;
-        }
+        } */
     </style>
 </head>
 
 <body>
-    <h2>Update Product</h2>
-    <a href="../../index.php">Back to Product List</a>
-    <br><br>
-    <?php if (count($row) > 0) : ?>
-        <form action="" method="post">
-            <input type="hidden" name="id" value="<?php echo $row[0]['id']; ?>">
-            <label for="product_name">Product Name:</label>
-            <input type="text" name="product_name" value="<?php echo $row[0]['product_name']; ?>" required><br>
-            <label for="category">Category: </label>
-            <select name="category" id="category">
-                <?php if (count($categoryController->index()) > 0) : ?>
-                    <?php $counter = 1 ?>
-                    <?php foreach ($categoryController->index() as $category) : ?>
-                        <option value="<?= $category["id"] ?>" <?php echo $category["id"] === $row[0]['category_id'] ? 'selected' : '' ?>><?= $category["category_name"] ?></option>
-                        <?php $counter++ ?>
-                    <?php endforeach ?>
+    <main class="container mt-5" style="max-width: 800px; margin: auto;">
+        <h2 class="mb-5">Update Product</h2>
+        <a href="../../index.php" class="btn btn-outline-secondary mb-3">
+            < Back to Product List</a>
+                <br><br>
+                <?php if (count($row) > 0) : ?>
+                    <div class="card">
+                        <form action="" method="post" class="card-body">
+                            <input type="hidden" name="id" value="<?php echo $row[0]['id']; ?>">
+                            <label for="product_name" class="form-label">Product Name</label>
+                            <input type="text" name="product_name" value="<?php echo $row[0]['product_name']; ?>" class="form-control">
+                            <?php if (isset($errors['product_name'])) : ?>
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    <?php echo $errors['product_name']; ?>
+                                </div>
+                            <?php endif ?>
+                            <br>
+                            <label for="category" class="form-label">Category</label>
+                            <select name="category" id="category" class="form-select">
+                                <?php if (count($categoryController->index()) > 0) : ?>
+                                    <?php $counter = 1 ?>
+                                    <?php foreach ($categoryController->index() as $category) : ?>
+                                        <option value="<?= $category["id"] ?>" <?php echo $category["id"] === $row[0]['category_id'] ? 'selected' : '' ?>><?= $category["category_name"] ?></option>
+                                        <?php $counter++ ?>
+                                    <?php endforeach ?>
+                                <?php else : ?>
+                                    <option>--Belum ada data, buat kategori dahulu.</option>
+                                <?php endif ?>
+                            </select>
+                            <?php if (isset($errors['category'])) : ?>
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    <?php echo $errors['category']; ?>
+                                </div>
+                            <?php endif ?>
+                            <br>
+                            <label for="price" class="form-label">Price:</label>
+                            <input type="number" name="price" value="<?php echo $row[0]['price']; ?>"
+                                class="form-control">
+                            <?php if (isset($errors['price'])) : ?>
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    <?php echo $errors['price']; ?>
+                                </div>
+                            <?php endif ?>
+                            <br>
+                            <label for="stock" class="form-label">Stock:</label>
+                            <input type="number" name="stock" value="<?php echo $row[0]['stock']; ?>"
+                                class="form-control">
+                            <?php if (isset($errors['stock'])) : ?>
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    <?php echo $errors['stock']; ?>
+                                </div>
+                            <?php endif ?>
+                            <br>
+                            <input type="submit" value="Update Product" class="btn btn-primary w-100">
+                        </form>
+                    </div>
                 <?php else : ?>
-                    <option>--Belum ada data, buat kategori dahulu.</option>
+                    <p>Data not found</p>
                 <?php endif ?>
-            </select><br>
-            <label for="price">Price:</label>
-            <input type="number" name="price" value="<?php echo $row[0]['price']; ?>"
-                required><br>
-            <label for="stock">Stock:</label>
-            <input type="number" name="stock" value="<?php echo $row[0]['stock']; ?>"
-                required><br>
-            <input type="submit" value="Update Product">
-        </form>
-    <?php else : ?>
-        <p>Data not found</p>
-    <?php endif ?>
+    </main>
 </body>
 
 </html>

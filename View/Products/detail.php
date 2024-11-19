@@ -50,35 +50,42 @@ $row = $productController->show($id);
 </head>
 
 <body>
-    <h2>Product Details</h2>
-    <a href="../../index.php">Back to Product List</a>
-    <br><br>
-    <?php if (count($row) > 0) : ?>
-        <table>
-            <tr>
-                <td>ID</td>
-                <td>: <?php echo $row[0]["id"]; ?></td>
-            </tr>
-            <tr>
-                <td>Product Name</td>
-                <td>: <?php echo $row[0]["product_name"]; ?></td>
-            </tr>
-            <tr>
-                <td>Category</td>
-                <td>: <?php echo $row[0]["category_name"]; ?></td>
-            </tr>
-            <tr>
-                <td>Price</td>
-                <td>: <?php echo $row[0]["price"]; ?></td>
-            </tr>
-            <tr>
-                <td>Stocks</td>
-                <td>: <?php echo $row[0]["stock"]; ?></td>
-            </tr>
-        </table>
-    <?php else : ?>
-        <p>0 Result</p>
-    <?php endif ?>
+    <main class="container mt-5" style="max-width: 800px; margin: auto;">
+        <h2 class="mb-5">Product Details</h2>
+        <a href="../../index.php" class="btn btn-outline-secondary mb-3">
+            < Back to Product List</a>
+                <br><br>
+                <?php if (count($row) > 0) : ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>: <?php echo $row[0]["id"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Product Name</td>
+                                    <td>: <?php echo $row[0]["product_name"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Category</td>
+                                    <td>: <?php echo $row[0]["category_name"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Price</td>
+                                    <td>: <?php echo $row[0]["price"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Stocks</td>
+                                    <td>: <?php echo $row[0]["stock"]; ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <p>0 Result</p>
+                <?php endif ?>
+    </main>
 
 </body>
 

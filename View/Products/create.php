@@ -44,15 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stock = $_POST["stock"];
     }
 
-    var_dump($errors);
-
     // If there are no validation errors, proceed with creating the product
     if (empty($errors)) {
         $data = [
             'product_name' => $product_name,
             'category_id' => $category,
             'price' => $price,
-            'stock' => $stock
+            'stock' => $stock,
+            "isDeleted" => 0
         ];
 
         if ($productController->create($data)) {
@@ -81,31 +80,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <main class="container">
-        <h2>Create Product</h2>
-        <a href="../../index.php">Back to Product List</a>
-        <br><br>
-        <form action="" method="post">
-            <label for="product_name">Product Name:</label>
-            <input type="text" name="product_name" required><br>
-            <label for="category">Category: </label>
-            <select name="category" id="category">
-                <?php if (count($categoryController->index()) > 0) : ?>
-                    <?php $counter = 1 ?>
-                    <?php foreach ($categoryController->index() as $category) : ?>
-                        <option value="<?= $category["id"] ?>"><?= $category["category_name"] ?></option>
-                        <?php $counter++ ?>
-                    <?php endforeach ?>
-                <?php else : ?>
-                    <option>--Belum ada data, buat kategori dahulu.</option>
-                <?php endif ?>
-            </select><br>
-            <label for="price">Price:</label>
-            <input type="number" name="price" required><br>
-            <label for="stock">Stock:</label>
-            <input type="number" name="stock" required><br>
-            <input type="submit" value="Add Product">
-        </form>
+    <main class="container mt-5 mb-5" style="max-width: 800px; margin: auto;">
+        <h2 class="mb-5">Create Product</h2>
+        <a href="../../index.php" class="btn btn-outline-secondary mb-3">
+            < Back to Product List</a>
+                <div class="card">
+                    <form action="" method="post" class="card-body">
+                        <label for="product_name" class="form-label">Product Name</label>
+                        <input type="text" name="product_name" class="form-control">
+                        <?php if (isset($errors['product_name'])) : ?>
+                            <div class="alert alert-danger mt-2" role="alert">
+                                <?php echo $errors['product_name']; ?>
+                            </div>
+                        <?php endif ?>
+                        <br>
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category" id="category" class="form-select">
+                            <?php if (count($categoryController->index()) > 0) : ?>
+                                <?php $counter = 1 ?>
+                                <?php foreach ($categoryController->index() as $category) : ?>
+                                    <option value="<?= $category["id"] ?>"><?= $category["category_name"] ?></option>
+                                    <?php $counter++ ?>
+                                <?php endforeach ?>
+                            <?php else : ?>
+                                <option>--Belum ada data, buat kategori dahulu.</option>
+                            <?php endif ?>
+                        </select>
+                        <?php if (isset($errors['category'])) : ?>
+                            <div class="alert alert-danger mt-2" role="alert">
+                                <?php echo $errors['category']; ?>
+                            </div>
+                        <?php endif ?>
+                        <br>
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" name="price" class="form-control">
+                        <?php if (isset($errors['price'])) : ?>
+                            <div class="alert alert-danger mt-2" role="alert">
+                                <?php echo $errors['price']; ?>
+                            </div>
+                        <?php endif ?>
+                        <br>
+                        <label for="stock" class="form-label">Stock:</label>
+                        <input type="number" name="stock" class="form-control">
+                        <?php if (isset($errors['stock'])) : ?>
+                            <div class="alert alert-danger mt-2" role="alert">
+                                <?php echo $errors['stock']; ?>
+                            </div>
+                        <?php endif ?>
+                        <br>
+                        <input type="submit" value="Add Product" class="btn btn-primary w-100">
+                    </form>
+                </div>
     </main>
 </body>
 

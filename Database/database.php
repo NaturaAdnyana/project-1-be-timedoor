@@ -129,9 +129,14 @@ class Database
      */
     public function deleteRecord($tableName, $id)
     {
-        $query = "UPDATE {$tableName} SET isDeleted=1 WHERE id={$id}";
-        $stmt = $this->getInstance()->prepare($query);
-        $stmt->execute();
+        try {
+            $query = "UPDATE {$tableName} SET isDeleted=1 WHERE id={$id}";
+            $stmt = $this->getInstance()->prepare($query);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return ("Error deleting data: " . $e->getMessage());
+        }
     }
 
     /**

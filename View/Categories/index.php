@@ -24,43 +24,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["restoreAllCategory"])
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg bg-black">
         <div class="container">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="../../index.php">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="">Categories</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="../../index.php">Products</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="">Categories</a></li>
             </ul>
         </div>
     </nav>
-    <main class="container">
-        <h2>Category List</h2>
-        <a href="create.php">Add Category</a>
+    <main class="container mt-5">
+        <h2 class="mb-5">Category List</h2>
+        <a href="create.php" class="btn btn-outline-success">+ Add Category</a>
         <br><br>
-        <table class="table">
-            <tr>
-                <th>No</th>
-                <th>Category Name</th>
-                <th>Actions</th>
-            </tr>
-            <?php if (count($categoryController->index()) > 0) : ?>
-                <?php $counter = 1 ?>
-                <?php foreach ($categoryController->index() as $category) : ?>
-                    <tr>
-                        <td><?php echo $counter ?></td>
-                        <td><?php echo $category["category_name"] ?></td>
-                        <td>
-                            <a href="detail.php?id=<?php echo $category["id"] ?>">View</a> |
-                            <a href="update.php?id=<?php echo $category["id"] ?>">Update</a> |
-                            <a href="delete.php?id=<?php echo $category["id"] ?>">Delete</a>
-                        </td>
-                    </tr>
-                    <?php $counter++ ?>
-                <?php endforeach ?>
-            <?php else : ?>
+        <table class="table table-striped">
+            <thead class="table-dark">
                 <tr>
-                    <td colspan="5">0 result</td>
+                    <th>No</th>
+                    <th>Category Name</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endif ?>
+            </thead>
+            <tbody>
+                <?php if (count($categoryController->index()) > 0) : ?>
+                    <?php $counter = 1 ?>
+                    <?php foreach ($categoryController->index() as $category) : ?>
+                        <tr>
+                            <td><?php echo $counter ?></td>
+                            <td><?php echo $category["category_name"] ?></td>
+                            <td>
+                                <a href="detail.php?id=<?php echo $category["id"] ?>" class="btn btn-primary">View</a>
+                                <a href="update.php?id=<?php echo $category["id"] ?>" class="btn btn-warning">Update</a>
+                                <a href="delete.php?id=<?php echo $category["id"] ?>" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        <?php $counter++ ?>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="5">0 result</td>
+                    </tr>
+                <?php endif ?>
+            </tbody>
         </table>
     </main>
 </body>

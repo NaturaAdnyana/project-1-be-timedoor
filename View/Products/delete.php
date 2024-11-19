@@ -12,14 +12,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (empty($_GET["id"])) {
         $errors['id'] = "Product Not Found";
     }
+}
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["id"])) {
+        $errors['id'] = "Product Not Found";
+    }
     // If there are no validation errors, proceed with updating the product
     if (empty($errors)) {
         if ($productController->destroy($id)) {
             header("Location: ../../index.php");
-        } else {
-            echo "Error";
+            exit();
         }
+    } else {
+        echo "Error";
     }
 }
 
@@ -55,40 +61,51 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 </head>
 
 <body class="container mt-4">
-    <h2>Delete Product</h2>
-    <a href="../../index.php">Back to Product List</a>
-    <br><br>
-    <?php if (count($row) > 0) : ?>
-        <p>Are you sure you want to delete the following product?</p>
-        <table>
-            <tr>
-                <td>ID</td>
-                <td>: <?php echo $row[0]["id"]; ?></td>
-            </tr>
-            <tr>
-                <td>Product Name</td>
-                <td>: <?php echo $row[0]["product_name"]; ?></td>
-            </tr>
-            <tr>
-                <td>Category Name</td>
-                <td>: <?php echo $row[0]["category_name"]; ?></td>
-            </tr>
-            <tr>
-                <td>Price:</td>
-                <td>: <?php echo $row[0]["price"]; ?></td>
-            </tr>
-            <tr>
-                <td>Quantity:</td>
-                <td>: <?php echo $row[0]["stock"]; ?></td>
-            </tr>
-        </table>
-        <form action="" method="get">
-            <input type="hidden" name="id" value="<?php echo $row[0]['id']; ?>">
-            <input type="submit" value="Delete Product">
-        </form>
-    <?php else : ?>
-        <p>Data not found!</p>
-    <?php endif ?>
+    <main class="container mt-5" style="max-width: 800px; margin: auto;">
+        <h2 class="mb-5">Delete Product</h2>
+        <a href="../../index.php" class="btn btn-outline-secondary mb-3">
+            < Back to Product List</a>
+                <?php if (count($row) > 0) : ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Are you sure you want to delete the following product?</h4>
+                            <table class="mb-3">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>: <?php echo $row[0]["id"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Product Name</td>
+                                    <td>: <?php echo $row[0]["product_name"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Category Name</td>
+                                    <td>: <?php echo $row[0]["category_name"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Price:</td>
+                                    <td>: <?php echo $row[0]["price"]; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Quantity:</td>
+                                    <td>: <?php echo $row[0]["stock"]; ?></td>
+                                </tr>
+                            </table>
+                            <form action="" method="post">
+                                <input type="hidden" name="id" value="<?php echo $row[0]['id']; ?>">
+                                <?php if (isset($errors['id'])) : ?>
+                                    <div class="alert alert-danger mt-2" role="alert">
+                                        <?php echo $errors['id']; ?>
+                                    </div>
+                                <?php endif ?>
+                                <input type="submit" value="Delete Product" class="btn btn-danger w-100">
+                            </form>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <p class="alert alert-danger mt-2">Data not found!</p>
+                <?php endif ?>
+    </main>
 </body>
 
 </html>
